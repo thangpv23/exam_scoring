@@ -45,7 +45,7 @@ for i in range(50):
 st.subheader('120-question type')
 
 
-if st.button('Random 120'):
+if st.button('Random other 120 keys'):
     answer_key_120 = []
     tmp_key_list_120 =[]
 
@@ -86,7 +86,7 @@ if uploaded_file_120 is not None:
 
 st.subheader('50-question type')
 
-if st.button('Random 50'):
+if st.button('Random other 50 keys'):
     answer_key_50 = []
     tmp_key_list_50 =[]
 
