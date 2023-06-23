@@ -79,29 +79,32 @@ if uploaded_file_120 is not None:
     opencv_image = cv2.imdecode(file_bytes, 1)
     score, result_img, answer_list_120 = exam120_scoring(opencv_image, answer_key_120)
 
-  
-    answer_list_120 = np.array(answer_list_120)
-    tmp_answer_list = []
-    for i in range(120):
-        if answer_list_120[i] == 1:
-           tmp_answer_list.append("A")
-        elif answer_list_120[i] == 2:
-           tmp_answer_list.append("B")
-        elif answer_list_120[i] == 3:
-           tmp_answer_list.append("C")
-        elif answer_list_120[i] == 4:
-           tmp_answer_list.append("D")
+    if score is not None:
+        answer_list_120 = np.array(answer_list_120)
+        tmp_answer_list = []
+        for i in range(120):
+            if  answer_list_120[i] == 0:
+                tmp_answer_list.append("None")
+            elif answer_list_120[i] == 1:
+                tmp_answer_list.append("A")
+            elif answer_list_120[i] == 2:
+                tmp_answer_list.append("B")
+            elif answer_list_120[i] == 3:
+                tmp_answer_list.append("C")
+            elif answer_list_120[i] == 4:
+                tmp_answer_list.append("D")
 
-    tmp_answer_list = np.reshape(tmp_answer_list,(1, 120))
-    st.write("Answer detected:")
-    df120 = pd.DataFrame( tmp_answer_list, columns=('Question %d' % (i+1) for i in range(120)),)
-    st.dataframe(df120, hide_index = True)
+        tmp_answer_list = np.reshape(tmp_answer_list,(1, 120))
+        st.write("Answer detected:")
+        df120 = pd.DataFrame( tmp_answer_list, columns=('Question %d' % (i+1) for i in range(120)),)
+        st.dataframe(df120, hide_index = True)
 
 
-    st.image(result_img)
-    score = round(score*10, 2)
-    st.write("Score 120: ", score, "/10")
-
+        st.image(result_img)
+        score = round(score*10, 2)
+        st.write("Score 120: ", score, "/10")
+    else:
+        st.write("Detect failed, try again with another image")
 
 
 st.subheader('50-question type')
@@ -141,25 +144,30 @@ if uploaded_file_50 is not None:
 
     answer_list_50 = np.array(answer_list_50)
 
-    tmp_answer_list = []
-    for i in range(50):
-        if answer_list_50[i] == 1:
-           tmp_answer_list.append("A")
-        elif answer_list_50[i] == 2:
-           tmp_answer_list.append("B")
-        elif answer_list_50[i] == 3:
-           tmp_answer_list.append("C")
-        elif answer_list_50[i] == 4:
-           tmp_answer_list.append("D")
+    if score is not None:
+        tmp_answer_list = []
+        for i in range(50):
+            if  answer_list_50[i] == 0:
+                tmp_answer_list.append("None")
+            elif answer_list_50[i] == 1:
+                tmp_answer_list.append("A")
+            elif answer_list_50[i] == 2:
+                tmp_answer_list.append("B")
+            elif answer_list_50[i] == 3:
+                tmp_answer_list.append("C")
+            elif answer_list_50[i] == 4:
+                tmp_answer_list.append("D")
 
-    tmp_answer_list = np.reshape(tmp_answer_list,(1, 50))
-    st.write("Answer detected:")
-    df50 = pd.DataFrame( tmp_answer_list, columns=('Question %d' % (i+1) for i in range(50)),)
-    st.dataframe(df50, hide_index = True)
+        tmp_answer_list = np.reshape(tmp_answer_list,(1, 50))
+        st.write("Answer detected:")
+        df50 = pd.DataFrame( tmp_answer_list, columns=('Question %d' % (i+1) for i in range(50)),)
+        st.dataframe(df50, hide_index = True)
 
 
 
-    st.image(result_img)
-    score = round(score*10, 2)
-    st.write("Score 120: ", score, "/10")
+        st.image(result_img)
+        score = round(score*10, 2)
+        st.write("Score 120: ", score, "/10")
 
+    else:
+        st.write("Detect failed, try again with another image")
