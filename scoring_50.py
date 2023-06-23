@@ -161,28 +161,31 @@ def exam50_scoring(image, answer_key):
                     correct_list.append(ques_num)
             
             
-    for n, false in enumerate (false_list):
-        
-        false +=1 
-        offset_draw_x = offset_fullform_x[(false-1)//30]
-        offset_draw_y = offset_region_list[((false-1) - (false-1)//30 * 30)//5]
+
+    for n in range (len(false_list)):
+
+        ques_num = false_list [n]
+        offset_draw_x = offset_fullform_x[(ques_num)//30]
+        offset_draw_y = offset_region_list[((ques_num) - (ques_num)//30 * 30)//5]
         coor = coor_false_visualize[n]
-        i = ((false-1) - 30* block ) %5
-        j = coor
+        i = ((ques_num) - 30* block ) %5
+        j_correct = answer_list[ques_num] - 1
+        j_false = coor
         # cv2.rectangle(full_form,(offset_draw_x + 120 + j*65  , offset_draw_y + 757 + i*50 ),   ( offset_draw_x + 120+ j*65 + 65  , offset_draw_y + 757 + i*50 + 50),   (0, 0, 0), 1)
-        cv2.circle(full_form,( offset_draw_x +  120 + j*65 + 32, offset_draw_y + 757 +    i*50 + 25),  20, (255, 0, 0),3)         
+        cv2.circle(full_form,( offset_draw_x +  120 + j_false*65 + 32, offset_draw_y + 757 +    i*50 + 25),  20, (0, 255, 0),3)   
+        cv2.circle(full_form,( offset_draw_x +  120 + j_correct*65 + 32, offset_draw_y + 757 +    i*50 + 25),  20, (255, 0, 0),3)   
 
     for n in range (len(correct_list)):
         # print(correct)
         # ques_num = correct_list [n]
-        ques_num = correct_list [n] + 1
-        offset_draw_x = offset_fullform_x[(ques_num-1)//30]
-        offset_draw_y = offset_region_list[((ques_num-1) - (ques_num-1)//30 * 30)//5]
-        answer = answer_key[ques_num-1] 
-        i = ((ques_num-1) - 30* block ) %5
+        ques_num = correct_list [n] 
+        offset_draw_x = offset_fullform_x[(ques_num)//30]
+        offset_draw_y = offset_region_list[((ques_num) - (ques_num)//30 * 30)//5]
+        answer = answer_key[ques_num] 
+        i = ((ques_num) - 30* block ) %5
         j = answer -1 
         # cv2.rectangle(full_form,(offset_draw_x + 120 + j*65  , offset_draw_y + 757 + i*50 ),   ( offset_draw_x + 120+ j*65 + 65  , offset_draw_y + 757 + i*50 + 50),   (0, 0, 0), 1)
         cv2.circle(full_form,( offset_draw_x +  120 + j*65 + 32, offset_draw_y + 757 +    i*50 + 25),  20, (0, 255, 0),3) 
 
     score = len(correct_list) / 50
-    return score, full_form
+    return score, full_form, answer_list
