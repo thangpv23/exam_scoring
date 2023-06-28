@@ -181,13 +181,14 @@ def exam50_scoring(image, answer_key):
             coor = coor_false_visualize[n]
             i = ((ques_num) - 30* block ) %5
             j_correct = answer_list[ques_num] - 1
-            cv2.circle(full_form,( offset_draw_x +  120 + j_correct*65 + 32, offset_draw_y + 757 +    i*50 + 25),  20, (0, 255, 0),3) 
+            
             j_false = coor
             # if j_false == 0:
             # cv2.rectangle(full_form,(offset_draw_x + 120 + j*65  , offset_draw_y + 757 + i*50 ),   ( offset_draw_x + 120+ j*65 + 65  , offset_draw_y + 757 + i*50 + 50),   (0, 0, 0), 1)
                 # cv2.circle(full_form,( offset_draw_x +  120 + j_false*65 + 32, offset_draw_y + 757 +    i*50 + 25),  20, (255, 255, 0),3)   
             # else:
-            cv2.circle(full_form,( offset_draw_x +  120 + j_false*65 + 32, offset_draw_y + 757 +    i*50 + 25),  20, (255, 0, 0),3) 
+            cv2.circle(full_form,( offset_draw_x +  120 + j_false*65 + 32, offset_draw_y + 757 +    i*50 + 25),  20, (0, 255, 0),3) 
+            cv2.circle(full_form,( offset_draw_x +  120 + j_correct*65 + 32, offset_draw_y + 757 +    i*50 + 25),  20, (255, 0, 0),3) 
 
         for n in range (len(correct_list)):
             # print(correct)
