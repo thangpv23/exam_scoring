@@ -12,18 +12,18 @@ def exam50_scoring(image, answer_key):
         center_points = []
         
         im2 = image
-        im2 = cv2.resize(im2,(3030, 3400))
+        # im2 = cv2.resize(im2,(3030, 3400))
 
         #  y,x coordinates of top-left, bottom-left, bottom-right and top-right corners
         shape_y = im2.shape[0]
         shape_x = im2.shape[1]
-        image2detect = [im2[400:900, 300:800], 
-                        im2 [im2.shape[0]-300:, 0:800], 
-                        im2 [im2.shape[0]-500:im2.shape[0]-100, im2.shape[1]-700:im2.shape[1]-200] ,
-                        im2 [400:800,  im2.shape[1]-800:im2.shape[1]-200]]
+        image2detect = [im2[300:600, 200:450], 
+                        im2 [im2.shape[0]-300:, 200:500], 
+                        im2 [im2.shape[0]-400:, im2.shape[1]-500:] ,
+                        im2 [400:600,  im2.shape[1]-450:im2.shape[1]-200]]
                         
-        # image2detect = [image2detect[2]]
-        offset = [[400, 300],  [shape_y-300, 0],[shape_y-500, shape_x-700], [400, shape_x-800]]
+        # image2detect = [image2detect[3]]
+        offset = [[300, 200],  [shape_y-300, 200],[shape_y-400, shape_x-500], [400, shape_x-450]]
 
         for roi in image2detect:
 
@@ -82,7 +82,7 @@ def exam50_scoring(image, answer_key):
 
         align_coor2 = full_form[757:1777, 410:825] 
 
-        offset_fullform_x = [5, 410]
+        offset_fullform_x = [0, 410]
 
         align_coor_list= [align_coor1, align_coor2]
         # align_coor_list= [align_coor1]
@@ -95,11 +95,11 @@ def exam50_scoring(image, answer_key):
             new_img = align_coor
 
             # block=0
-            region_list_1=[new_img[:260 ,:], new_img[260:510, :],new_img[510:770 ,:], new_img[760:1020 ,:] , new_img[1020: 1270 ,:], new_img[1270:  ,:] ]
-            region_list_2 = [ new_img[:260 ,:], new_img[260:510, :],new_img[510:770 ,:], new_img[760:1020 ,:]]
+            region_list_1=[new_img[:270 ,:], new_img[250:500, :],new_img[480:770 ,:], new_img[750:1020 ,:] , new_img[1010: 1270 ,:], new_img[1260:  ,:] ]
+            region_list_2 = [ new_img[:270 ,:], new_img[250:500, :],new_img[480:770 ,:], new_img[750:1020 ,:]]
             # region_list=[region_list_or[0]]
-            # region_list_1 = [ new_img[:260 ,:]]
-            offset_region_list = [0, 260, 510, 760, 1010, 1270]
+            # region_list_1=[new_img[:260 ,:], new_img[260:510, :],new_img[510:770 ,:], new_img[760:1020 ,:] ]
+            offset_region_list = [0, 250, 500, 750, 1010, 1250]
 
 
             x_range = 70
@@ -136,16 +136,16 @@ def exam50_scoring(image, answer_key):
                         number_of_black_pix = np.sum(scoring_region ==  0) 
                         max_black = 60*50
 
-                        if number_of_black_pix > max_num and number_of_black_pix > 0.5 * max_black and answer != 0:
+                        if number_of_black_pix > max_num and number_of_black_pix > 0.2 * max_black and answer != 0:
                             # max_num = number_of_black_pix
                             answer = 0
-                            break
+                            # break
 
 
-                        if number_of_black_pix > max_num and number_of_black_pix > 0.5 * max_black and answer == 0:
+                        if number_of_black_pix > max_num and number_of_black_pix > 0.2 * max_black and answer == 0:
                             max_num = number_of_black_pix
                             answer = j+1
-                            break
+                            # break
 
                     answer_list.append(answer)
 
@@ -171,10 +171,13 @@ def exam50_scoring(image, answer_key):
             coor = coor_false_visualize[n]
             i = ((ques_num) - 30* block ) %5
             j_correct = answer_list[ques_num] - 1
+            cv2.circle(full_form,( offset_draw_x +  120 + j_correct*65 + 32, offset_draw_y + 757 +    i*50 + 25),  20, (255, 0, 0),3) 
             j_false = coor
+            if j_false == 0:
             # cv2.rectangle(full_form,(offset_draw_x + 120 + j*65  , offset_draw_y + 757 + i*50 ),   ( offset_draw_x + 120+ j*65 + 65  , offset_draw_y + 757 + i*50 + 50),   (0, 0, 0), 1)
-            cv2.circle(full_form,( offset_draw_x +  120 + j_false*65 + 32, offset_draw_y + 757 +    i*50 + 25),  20, (0, 255, 0),3)   
-            cv2.circle(full_form,( offset_draw_x +  120 + j_correct*65 + 32, offset_draw_y + 757 +    i*50 + 25),  20, (255, 0, 0),3)   
+                cv2.circle(full_form,( offset_draw_x +  120 + j_false*65 + 32, offset_draw_y + 757 +    i*50 + 25),  20, (255, 0, 255),3)   
+            else:
+                cv2.circle(full_form,( offset_draw_x +  120 + j_correct*65 + 32, offset_draw_y + 757 +    i*50 + 25),  20, (255, 0, 0),3) 
 
         for n in range (len(correct_list)):
             # print(correct)
