@@ -87,7 +87,7 @@ def exam50_scoring(image, answer_key):
 
         align_coor2 = full_form[757:1777, 410:825] 
 
-        offset_fullform_x = [0, 410]
+        offset_fullform_x = [5, 410]
 
         align_coor_list= [align_coor1, align_coor2]
         # align_coor_list= [align_coor1]
