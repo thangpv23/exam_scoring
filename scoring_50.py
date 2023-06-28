@@ -27,13 +27,18 @@ def exam50_scoring(image, answer_key):
 
         for roi in image2detect:
 
-            roi_gray = cv2.threshold(roi, 200, 255, cv2.THRESH_BINARY_INV)[1]
-            kernel = np.ones((5, 5), np.uint8)
+            roi_gray = cv2.cvtColor(roi, cv2.COLOR_BGR2GRAY)
+            roi_gray = cv2.GaussianBlur(roi_gray,(21,21),0)
+            roi_gray = cv2.adaptiveThreshold(roi_gray, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
+                                                cv2.THRESH_BINARY, 21, 10)
+            # roi_gray = cv2.threshold(roi, 100, 255, cv2.THRESH_BINARY_INV)[1]
+            kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5,5))
             roi_gray = cv2.erode(roi_gray, kernel, iterations=2)
+            # kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (9,9))
+            roi_gray = cv2.morphologyEx(roi_gray, cv2.MORPH_OPEN, kernel,iterations=4)
             edges= cv2.Canny(roi_gray, 200,255)
 
             contours, hierarchy= cv2.findContours(edges.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-
             # print(contours[0][0][0])
             # contours = np.array(contours[0])
             # print(contours[0][0])
@@ -112,14 +117,19 @@ def exam50_scoring(image, answer_key):
                 
                 offset_y = offset_region_list[n]
 
+
                 new_img_gray = cv2.cvtColor(region, cv2.COLOR_BGR2GRAY)
-                tmp  = cv2.threshold(new_img_gray, 100, 255, cv2.THRESH_BINARY_INV)[1]
-                tmp = cv2.bitwise_not(tmp)
+                new_img_gray = cv2.adaptiveThreshold(new_img_gray, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
+                                            cv2.THRESH_BINARY, 199, 10)
+                
+                # tmp  = cv2.threshold(new_img_gray, 100, 255, cv2.THRESH_BINARY_INV)[1]
+                tmp = new_img_gray
+                
                 kernel = np.ones((5, 5), np.uint8)
                 # tmp = cv2.bitwise_not(tmp)
-                tmp = cv2.erode(tmp,  kernel, iterations=2)
-                # tmp = cv2.morphologyEx(tmp, cv2.MORPH_OPEN, kernel)
-                # tmp = cv2.bitwise_not(tmp)
+                tmp = cv2.erode(tmp,  kernel, iterations=1)
+                kernel = np.ones((9, 9), np.uint8)
+                tmp = cv2.morphologyEx(tmp, cv2.MORPH_CLOSE, kernel) 
 
                 for i in range(5):
         
@@ -136,10 +146,10 @@ def exam50_scoring(image, answer_key):
                         number_of_black_pix = np.sum(scoring_region ==  0) 
                         max_black = 60*50
 
-                        if number_of_black_pix > max_num and number_of_black_pix > 0.2 * max_black and answer != 0:
-                            # max_num = number_of_black_pix
-                            answer = 0
-                            # break
+                        # if number_of_black_pix > max_num and number_of_black_pix > 0.2 * max_black and answer != 0:
+                        #     # max_num = number_of_black_pix
+                        #     answer = 0
+                        #     # break
 
 
                         if number_of_black_pix > max_num and number_of_black_pix > 0.2 * max_black and answer == 0:
