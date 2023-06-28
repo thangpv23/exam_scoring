@@ -20,10 +20,10 @@ def exam50_scoring(image, answer_key):
         image2detect = [im2[300:600, 200:450], 
                         im2 [im2.shape[0]-300:, 200:500], 
                         im2 [im2.shape[0]-400:, im2.shape[1]-500:] ,
-                        im2 [400:600,  im2.shape[1]-450:im2.shape[1]-200]]
+                        im2 [350:600,  im2.shape[1]-450:im2.shape[1]-200]]
                         
         # image2detect = [image2detect[3]]
-        offset = [[300, 200],  [shape_y-300, 200],[shape_y-400, shape_x-500], [400, shape_x-450]]
+        offset = [[300, 200],  [shape_y-300, 200],[shape_y-400, shape_x-500], [350, shape_x-450]]
 
         for roi in image2detect:
 
