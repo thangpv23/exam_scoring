@@ -152,7 +152,7 @@ def exam50_scoring(image, answer_key):
                             # break
 
 
-                        if number_of_black_pix > 0.9 * max_num and number_of_black_pix > 0.2 * max_black and answer == 0:
+                        if number_of_black_pix > 0.8 * max_num and number_of_black_pix > 0.2 * max_black:
                             max_num = number_of_black_pix
                             answer = j+1
                             # break
