@@ -146,13 +146,13 @@ def exam50_scoring(image, answer_key):
                         number_of_black_pix = np.sum(scoring_region ==  0) 
                         max_black = 60*50
 
-                        if number_of_black_pix > max_num and number_of_black_pix > 0.3 * max_black and answer != 0:
+                        if number_of_black_pix > max_num and number_of_black_pix > 0.2 * max_black and answer != 0:
                             # max_num = number_of_black_pix
                             answer = 0
                             # break
 
 
-                        if number_of_black_pix > max_num and number_of_black_pix > 0.3 * max_black and answer == 0:
+                        if number_of_black_pix > max_num and number_of_black_pix > 0.2 * max_black and answer == 0:
                             max_num = number_of_black_pix
                             answer = j+1
                             # break
