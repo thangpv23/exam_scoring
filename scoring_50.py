@@ -139,7 +139,7 @@ def exam50_scoring(image, answer_key):
                     for j in range(4):
                         
                         
-                        scoring_region = tmp[   i*50 : i*50 + 50 , 120 + j*60:  120+ j*65 + 65]
+                        scoring_region = tmp[   i*50 : i*50 + 50 , 120 + j*65:  120+ j*65 + 65]
                         cv2.rectangle(tmp,(120 + j*65  ,   i*50 ),   ( 120+ j*65 + 65  ,  i*50 + 50),    (0, 0, 0), 1)
                         # cv2.rectangle(region,(120 + j*65  ,  i*50 ),   ( 120+ j*65 + 65  , i*50 + 50),   (0, 0, 0), 1)
         
