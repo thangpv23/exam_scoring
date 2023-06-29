@@ -144,15 +144,15 @@ def exam50_scoring(image, answer_key):
                         # cv2.rectangle(region,(120 + j*65  ,  i*50 ),   ( 120+ j*65 + 65  , i*50 + 50),   (0, 0, 0), 1)
         
                         number_of_black_pix = np.sum(scoring_region ==  0) 
-                        max_black = 60*50
+                        max_black = 65*50
 
-                        if number_of_black_pix > max_num and number_of_black_pix > 0.2 * max_black and answer != 0:
-                            # max_num = number_of_black_pix
-                            answer = 0
+                        # if number_of_black_pix > 0.9 * max_num and number_of_black_pix > 0.2 * max_black and answer != 0:
+                        #     # max_num = number_of_black_pix
+                        #     answer = 0
                             # break
 
 
-                        if number_of_black_pix > max_num and number_of_black_pix > 0.2 * max_black and answer == 0:
+                        if number_of_black_pix > 0.9 * max_num and number_of_black_pix > 0.2 * max_black and answer == 0:
                             max_num = number_of_black_pix
                             answer = j+1
                             # break
